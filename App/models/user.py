@@ -5,9 +5,20 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username =  db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(120), nullable=False)
+    firstName = db.Column(db.String(120), nullable=False)
+    lastName = db.Column(db.String(120), nullable=False)
+    category = db.Column(db.String(120))
+    
 
-    def __init__(self, username, password):
+    mapper_args = {
+        'polymorphic_identity': 'user',
+        'polymorphic_on': 'category'
+    }
+
+    def __init__(self, username, password,firstName,lastName):
         self.username = username
+        self.firstName=firstName
+        self.lastName=lastName
         self.set_password(password)
 
     def get_json(self):

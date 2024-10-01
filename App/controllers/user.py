@@ -1,8 +1,9 @@
 from App.models import User
+from App.models import Job
 from App.database import db
 
-def create_user(username, password):
-    newuser = User(username=username, password=password)
+def create_user(username, password,firstName,lastName):
+    newuser = User(username=username, password=password,firstName=firstName,lastName=lastName)
     db.session.add(newuser)
     db.session.commit()
     return newuser
@@ -31,3 +32,7 @@ def update_user(id, username):
         return db.session.commit()
     return None
     
+def view_jobs():
+    jobs = Job.query.all()
+    for job in jobs:
+        print(job)
