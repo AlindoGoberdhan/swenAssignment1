@@ -4,9 +4,14 @@ from sqlalchemy.exc import IntegrityError
 
 def create_application(applicantID,jobCode):
     
+
     if Application.query.filter_by(jobCode=jobCode,applicantID=applicantID).first() != None:
         return "An application for this job already exists"
 
+    test = Applicant.query.get(applicantID)
+    if not test:
+        return "This user is not an applicant"
+        
     try:
         application = Application(applicantID,jobCode)
         db.session.add(application)
